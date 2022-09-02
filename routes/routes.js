@@ -39,19 +39,13 @@ router.post('/new_question', protected_route, async (req, res) => {
 })
 
 router.get('/lets_play', protected_route, async(req, res) => {
-  let preguntas = await get_preguntas(),
-      respuestas = await mostrarRespuesta(),
-      obj = {
-        respuesta: [
-          respuestas.res[0],
-          respuestas.res[1],
-          respuestas.res[2]]
-      }
-      console.log(respuestas.res[2][0].text);
-  res.render('lets_play.html', obj)
+  let preguntas = await get_preguntas();
+  mostrarRespuesta(preguntas)
+  console.dir(preguntas[2].respuestas);
+
+  res.render('lets_play.html', {preguntas})
 })
-async function mostrarRespuesta (){
-  let preguntas = await get_preguntas()
+async function mostrarRespuesta (preguntas){
   preguntas[0].respuestas = [
     {
       value: 'correcta',
@@ -123,12 +117,7 @@ async function mostrarRespuesta (){
     },
   ]
   preguntas[2].respuestas = preguntas[2].respuestas.sort( (elem1, elem2) => Math.random() - 0.5)
-  console.log(preguntas[0].respuestas,preguntas[1].respuestas,preguntas[2].respuestas);
-  return respuesta = {
-    res: [preguntas[0].respuestas,
-          preguntas[1].respuestas,
-          preguntas[2].respuestas]
-  }
+
 }
 
 router.get('*', (req, res) => {

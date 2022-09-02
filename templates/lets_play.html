@@ -11,19 +11,19 @@
     </div>
   </div>
   <div class="row border-dark">
-    {% for pregunt in obj.preguntas %}
+    {% for pregunta in preguntas %}
     <div class="col-10 offset-1">
-      <p>¿{{pregunt.pregunta}}</p>
-      {% for resp in obj.respuestas%}
+      <p>¿{{pregunta.pregunta}}</p>
+      {% for respuesta in pregunta.respuestas%}
       <!--{%if resp.value == 'correcta' %}-->
       <div>
         <input name="pregunta" type="radio" value="correcta">
-        <label>{{resp}}</label>
+        <label>{{respuesta.text}}</label>
       </div>
       <!-- {% else %} -->
       <div>
         <input name="preguntafalsa" type="radio" value="incorrecta">
-        <label>{{resp}}</label>
+        <label>{{respuesta.text}}</label>
       </div>
       {% endif %}
       {%endfor%}
