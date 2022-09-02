@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import navbar %}
+
+{% block main %}
+{{ navbar('/lets_play', user) }}
+<div class="container">
+  <div class="row">
+    <div class="col-10 offset-1 bg-danger">
+      <p>Hola {{user.name}}!</p>
+      <p>Elige una respuesta por cada pregunta y envia el test una vez respondido. <br> Buena suerte!</p>
+    </div>
+  </div>
+  <div class="row border-dark">
+    {% for pregunt in obj.preguntas %}
+    <div class="col-10 offset-1">
+      <p>¿{{pregunt.pregunta}}</p>
+      {% for resp in obj.respuestas%}
+      <!--{%if resp.value == 'correcta' %}-->
+      <div>
+        <input name="pregunta" type="radio" value="correcta">
+        <label>{{resp}}</label>
+      </div>
+      <!-- {% else %} -->
+      <div>
+        <input name="preguntafalsa" type="radio" value="incorrecta">
+        <label>{{resp}}</label>
+      </div>
+      {% endif %}
+      {%endfor%}
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{% endblock %}
