@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const { get_preguntas, create_pregunta } = require('../db/preguntas.js')
-const { get_jugadas, create_jugada } = require('../db/jugadas.js')
+const { get_jugadas} = require('../db/jugadas.js'),
+      { evaluar_jugada } = require('../funciones/funtion.js')
+
 
 const router = Router()
 
@@ -17,8 +19,10 @@ function protected_route (req, res, next) {
 }
 
 
-router.get('/', protected_route, (req, res) => {
-  res.render('index.html')
+router.get('/', protected_route, async (req, res) => {
+  const verjugada = await get_jugadas()
+  console.log(verjugada);
+  res.render('index.html' ,{verjugada})
 })
 
 router.get('/new_question', protected_route, (req, res) => {
@@ -45,79 +49,42 @@ router.get('/lets_play', protected_route, async(req, res) => {
 
   res.render('lets_play.html', {preguntas})
 })
-async function mostrarRespuesta (preguntas){
-  preguntas[0].respuestas = [
-    {
-      value: 'correcta',
-      text: preguntas[0].respuesta_correcta
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[0].respuesta_falsa1
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[0].respuesta_falsa2
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[0].respuesta_falsa3
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[0].respuesta_falsa4
-    },
-  ]
-  preguntas[0].respuestas = preguntas[0].respuestas.sort( (elem1, elem2) => Math.random() - 0.5)
-  //
-  preguntas[1].respuestas = [
-    {
-      value: 'correcta',
-      text: preguntas[1].respuesta_correcta
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[1].respuesta_falsa1
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[1].respuesta_falsa2
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[1].respuesta_falsa3
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[1].respuesta_falsa4
-    },
-  ]
-  preguntas[1].respuestas = preguntas[1].respuestas.sort( (elem1, elem2) => Math.random() - 0.5)
-  //
-  preguntas[2].respuestas = [
-    {
-      value: 'correcta',
-      text: preguntas[2].respuesta_correcta
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[2].respuesta_falsa1
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[2].respuesta_falsa2
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[2].respuesta_falsa3
-    },
-    {
-      value: 'incorrecta',
-      text: preguntas[2].respuesta_falsa4
-    },
-  ]
-  preguntas[2].respuestas = preguntas[2].respuestas.sort( (elem1, elem2) => Math.random() - 0.5)
+router.post('/lets_play', protected_route, async (req, res) => {
 
+  const respuesta1 = req.body.respuesta1,
+        respuesta2 = req.body.respuesta2,
+        respuesta3 = req.body.respuesta3,
+        user_id = req.session.user.id  
+  evaluar_jugada(respuesta1, respuesta2, respuesta3,user_id)
+  res.render('index.html')
+})
+
+async function mostrarRespuesta (preguntas){
+  for (let i=0;i<preguntas.length;i++){
+    preguntas[i].respuestas = [
+      {
+        value: 'correcta',
+        text: preguntas[i].respuesta_correcta
+      },
+      {
+        value: 'incorrecta',
+        text: preguntas[i].respuesta_falsa1
+      },
+      {
+        value: 'incorrecta',
+        text: preguntas[i].respuesta_falsa2
+      },
+      {
+        value: 'incorrecta',
+        text: preguntas[i].respuesta_falsa3
+      },
+      {
+        value: 'incorrecta',
+        text: preguntas[i].respuesta_falsa4
+      },
+    ] 
+    preguntas[i].respuestas = preguntas[i].respuestas.sort( (elem1, elem2) => Math.random() - 0.5)
+  }
 }
 
 router.get('*', (req, res) => {

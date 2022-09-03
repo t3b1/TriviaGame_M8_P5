@@ -10,25 +10,23 @@ async function create_table () {
       id serial primary key,
       score int not null ,
       percentage float not null,
-      user_id int not null references users(id),
-      pregunta_id int not null references preguntas(id)
+      user_id int not null references users(id)
     )
   `)
 
   // 3. Devuelvo el cliente al pool
   client.release()
 }
-create_table()
+create_table() 
 
 
-async function get_jugadas (id) {
+async function get_jugadas () {
   // 1. Solicito un 'cliente' al pool de conexiones
   const client = await pool.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const { rows } = await client.query(
-    `select * from jugadas where id=$1`,
-    [id]
+    `select name, score, percentage from jugadas join users on users.id = user_id;`,
   )
   // 3. Devuelvo el cliente al pool
   client.release()
@@ -37,14 +35,14 @@ async function get_jugadas (id) {
   return rows[0]
 }
 
-async function create_jugada (score, percentage, user_id, pregunta_id) {
+async function create_jugada (score, percentage, user_id) {
   // 1. Solicito un 'cliente' al pool de conexiones
   const client = await pool.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const { rows } = await client.query(
-    `insert into jugadas (score, percentage, user_id, pregunta_id) values ($1, $2, $3, $4) returning *`,
-    [score, percentage, user_id, pregunta_id]
+    `insert into jugadas (score, percentage, user_id) values ($1, $2, $3) returning *`,
+    [score, percentage, user_id]
   )
 
   // 3. Devuelvo el cliente al pool

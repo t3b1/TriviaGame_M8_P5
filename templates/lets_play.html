@@ -4,31 +4,34 @@
 {% block main %}
 {{ navbar('/lets_play', user) }}
 <div class="container">
-  <div class="row">
-    <div class="col-10 offset-1 bg-danger">
-      <p>Hola {{user.name}}!</p>
-      <p>Elige una respuesta por cada pregunta y envia el test una vez respondido. <br> Buena suerte!</p>
-    </div>
-  </div>
-  <div class="row border-dark">
-    {% for pregunta in preguntas %}
-    <div class="col-10 offset-1">
-      <p>¿{{pregunta.pregunta}}</p>
-      {% for respuesta in pregunta.respuestas%}
-      <!--{%if resp.value == 'correcta' %}-->
-      <div>
-        <input name="pregunta" type="radio" value="correcta">
-        <label>{{respuesta.text}}</label>
+  <form action="/lets_play" method="post">
+    <div class="row">
+      <div class="col-10 offset-1 bg-danger">
+        <p>Hola {{user.name}}!</p>
+        <p>Elige una respuesta por cada pregunta y envia el test una vez respondido. <br> Buena suerte!</p>
       </div>
-      <!-- {% else %} -->
-      <div>
-        <input name="preguntafalsa" type="radio" value="incorrecta">
-        <label>{{respuesta.text}}</label>
-      </div>
-      {% endif %}
-      {%endfor%}
     </div>
-    {%endfor%}
-  </div>
+    <div class="row border-dark">
+      {% for pregunta in preguntas %}
+      <div class="col-10 offset-1">
+        <p>¿{{pregunta.pregunta}}</p>
+        <div class="form-group mb-4">
+          {% set indice=loop.index %}
+          {% for respuesta in pregunta.respuestas%}
+              {% if respuesta.text != '' %}
+              <div class="form-check">
+                <input name="respuesta{{ indice }}"  class="form-check-input" type="radio" value="{{respuesta.value}}" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  {{respuesta.text}}
+                </label>
+              </div>
+              {%endif%}
+              {%endfor%}
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+    <button class="btn btn-warning" type="submit">enviar</button>
+  </form>
 </div>
 {% endblock %}
