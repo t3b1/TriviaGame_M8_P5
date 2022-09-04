@@ -20,19 +20,19 @@ async function create_table () {
 create_table() 
 
 
-async function get_jugadas () {
+async function get_jugadas() {
   // 1. Solicito un 'cliente' al pool de conexiones
   const client = await pool.connect()
 
   // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const { rows } = await client.query(
-    `select name, score, percentage from jugadas join users on users.id = user_id;`,
+    `select name, score, percentage from jugadas join users on users.id = user_id order by percentage desc;`,
   )
   // 3. Devuelvo el cliente al pool
   client.release()
 
   // 4. retorno el primer usuario, en caso de que exista
-  return rows[0]
+  return rows
 }
 
 async function create_jugada (score, percentage, user_id) {

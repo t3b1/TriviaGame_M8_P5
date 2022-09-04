@@ -5,13 +5,42 @@
 {{ navbar('/', user) }}
 <h2 class="text-center">Hola {{ user.name }}</h2>
 <div class="container">
-  <a href="/lets_play" class=" btn btn-primary">Play</a>
-  <p>Hacer click en botón para jugar Trivia</p>
-</div>
-<div>
-  {{verjugada}}
-</div>
-<div>
-  <table></table>
-</div>
+  <div class="row mensaje" hidden>
+    <div class="col-8 bg-info mb-3">
+      <p> Eso estuvo genial {{user.name}}! tu puntaje es: {{algo.score}}/3 ({{  algo.percentage}} %)</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-6 offset-3 bg-primary">
+      <div class="text-center">
+        <a class="btn mt-5" href="/lets_play" >Play</a>
+      </div>
+      <p class="text-center mt-3">click en el boton para jugar</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-10 offset-1 bg-danger">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">nombre</th>
+            <th scope="col">puntaje</th>
+            <th scope="col">porcentaje</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for jugada in jugadas  %}
+          <tr>
+            <td>{{jugada.name}}</td>
+            <td>{{jugada.score}}</td>
+            <td>{{jugada.percentage}} %</td>
+          </tr>
+          {% endfor%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>  
+
+
 {% endblock %}

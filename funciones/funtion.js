@@ -13,8 +13,9 @@ async function evaluar_jugada (res1, res2,res3, user_id){
     }
           
     porcentaje = ((resultado * 100) / 3).toFixed(1)
-    console.log('score % id_us', resultado, porcentaje, user_id )
-    create_jugada(resultado, porcentaje, user_id)
+    
+ const algo = await create_jugada(resultado, porcentaje, user_id)
+ return algo
   }
 
 module.exports = {evaluar_jugada}
