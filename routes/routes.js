@@ -17,12 +17,15 @@ function protected_route (req, res, next) {
   // finalmente, seguimos el camino original
   next()
 }
-
+let bandera;
 let algo
 router.get('/', protected_route, async (req, res) => {
   const jugadas= await get_jugadas()
-  console.log(1,jugadas);
-  res.render('index.html' ,{jugadas, algo})
+  console.log(1,jugadas, bandera);
+  if(bandera.text == 'hidden'){
+
+  }
+  res.render('index.html' ,{jugadas, algo, bandera})
 })
 
 router.get('/new_question', protected_route, (req, res) => {
@@ -48,15 +51,18 @@ router.get('/lets_play', protected_route, async(req, res) => {
   console.dir(preguntas[2].respuestas);
   res.render('lets_play.html', {preguntas})
 })
-
 router.post('/lets_play', protected_route, async (req, res) => {
 
   const respuesta1 = req.body.respuesta1,
         respuesta2 = req.body.respuesta2,
         respuesta3 = req.body.respuesta3,
         user_id = req.session.user.id  
-algo =  await evaluar_jugada(respuesta1, respuesta2, respuesta3,user_id)
-console.log(6,algo );
+  algo =  await evaluar_jugada(respuesta1, respuesta2, respuesta3,user_id)
+  console.log(6,algo );
+  bandera = {
+    text: 'hidden',
+    estado: 1
+  };
   res.redirect('/')
 })
 

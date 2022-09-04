@@ -5,7 +5,12 @@
 {{ navbar('/', user) }}
 <h2 class="text-center">Hola {{ user.name }}</h2>
 <div class="container">
-  <div class="row mensaje" hidden>
+  {% if bandera == 1 %}
+  <div class="row mensaje" id="oculto">
+  {% else %}
+  <div class="row mensaje" id="oculto" hidden="true">
+  {% endif %}
+
     <div class="col-8 bg-info mb-3">
       <p> Eso estuvo genial {{user.name}}! tu puntaje es: {{algo.score}}/3 ({{  algo.percentage}} %)</p>
     </div>
