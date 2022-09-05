@@ -3,31 +3,40 @@
 
 {% block main %}
 {{ navbar('/', user) }}
-<h2 class="text-center">Hola {{ user.name }}</h2>
-<div class="container">
+
+<div class="container fondo">
+  <h2 class="text-center">Hola {{ user.name }}</h2>
     <div class="row mensaje" id="oculto" style="visibility: {{visibility}};">
-      <div class="col-8 bg-info mb-3">
+      <div class="col-6 offset-3 div_mensaje">
         <p> Eso estuvo genial {{jugada.name}}! tu puntaje es: {{jugada.score}}/3 ({{jugada.percentage}} %)</p>
       </div>
     </div>
 
 
   <div class="row mt-5">
-    <div class="col-6 offset-3 bg-primary">
-      <div class="text-center">
-        <a class="btn mt-5" href="/lets_play" >Play</a>
-      </div>
-      <p class="text-center mt-3">click en el boton para jugar</p>
+    <div class="col-4 offset-4 div_jugar">
+      <!-- <div class="text-center"> -->
+        <a class="btn btn_play" href="/lets_play" ><span class="material-symbols-outlined">
+          play_arrow
+          </span></a>
+      <!-- </div> -->
+      <p class="play">Click en el boton para jugar</p>
     </div>
   </div>
   <div class="row mt-5">
-    <div class="col-10 offset-1 bg-danger">
+    <div class="col-10 offset-1 tabla">
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">nombre</th>
-            <th scope="col">puntaje</th>
-            <th scope="col">porcentaje</th>
+            <th scope="col">nombre <span class="material-symbols-outlined">
+              person
+              </span></th>
+            <th scope="col">puntaje <span class="material-symbols-outlined">
+              star
+              </span></th>
+            <th scope="col">porcentaje <span class="material-symbols-outlined">
+              star_half
+              </span></th>
           </tr>
         </thead>
         <tbody>

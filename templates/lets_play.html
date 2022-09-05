@@ -3,12 +3,14 @@
 
 {% block main %}
 {{ navbar('/lets_play', user) }}
-<div class="container">
-  <form action="/lets_play" method="post">
+<div class="container fondo">
+  <form class="form"action="/lets_play" method="post">
     <div class="row">
-      <div class="col-10 offset-1 bg-danger">
-        <p>Hola {{user.name}}!</p>
-        <p>Elige una respuesta por cada pregunta y envia el test una vez respondido. <br> Buena suerte!</p>
+      <div class="col-10 offset-1 mensaje">
+        <!-- <p>Hola {{user.name}}!</p> -->
+        <img src="https://64.media.tumblr.com/19d9c43537c62bf3845edce13903f4da/a885014b9d8910a9-b2/s540x810/9d7ba65c229d860d2a87eee988da9c1656d2af4a.pnj" class="img-fluid" alt="...">
+        <p class="text-center">Elige una respuesta por cada pregunta y envia el test una vez respondido. <br> Buena suerte!</p>
+        <img src="https://64.media.tumblr.com/19d9c43537c62bf3845edce13903f4da/a885014b9d8910a9-b2/s540x810/9d7ba65c229d860d2a87eee988da9c1656d2af4a.pnj" class="img-fluid" alt="...">
       </div>
     </div>
     <div class="row border-dark">
@@ -31,7 +33,7 @@
           </div>
           {%endfor%}
         </div>
-    <button class="btn btn-warning" type="submit">enviar</button>
+    <button class="btn" type="submit">enviar</button>
   </form>
 </div>
 {% endblock %}
