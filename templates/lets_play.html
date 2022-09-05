@@ -15,7 +15,7 @@
     <div class="row border-dark">
       {% for pregunta in preguntas %}
       <div class="col-10 offset-1">
-        <p>¿{{pregunta.pregunta}}</p>
+        <p>¿{{pregunta.pregunta}}?</p>
         <div class="form-group mb-4">
           {% set indice=loop.index %}
           {% for respuesta in pregunta.respuestas%}

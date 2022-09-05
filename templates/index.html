@@ -5,9 +5,9 @@
 {{ navbar('/', user) }}
 
 <div class="container fondo">
-  <h2 class="text-center">Hola {{ user.name }}</h2>
+  <h2 class="text-center mt-5">Hola {{ user.name }}</h2>
     <div class="row mensaje" id="oculto" style="visibility: {{visibility}};">
-      <div class="col-6 offset-3 div_mensaje">
+      <div class="col-12 div_mensaje">
         <p> Eso estuvo genial {{jugada.name}}! tu puntaje es: {{jugada.score}}/3 ({{jugada.percentage}} %)</p>
       </div>
     </div>

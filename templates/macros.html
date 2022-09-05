@@ -10,19 +10,19 @@
         <li class="nav-item">
           <a class="nav-link {% if ruta == '/' %}active{% endif %}" aria-current="page" href="/"><span class="material-symbols-outlined">
             home
-            </span>Home</a>
+            </span>Inicio</a>
         </li>
         {% if user.isadmin == true %}
           <li class="nav-item">
             <a class="nav-link {% if ruta == '/new_question' %}active{% endif %}" href="/new_question"> <span class="material-symbols-outlined">
               quiz
-              </span>Add a question</a>
+              </span>Agregar preguntas</a>
           </li>
         {%endif%}
       </ul>
       <form class="d-flex" role="search">
         <p class="text-white me-4">{{ user.name }}</p>
-        <a href="/logout" class="btn btn-outline-danger" type="submit">Logout</a>
+        <a href="/logout" class="btn btn-outline-danger" type="submit">Salir</a>
       </form>
     </div>
   </div>

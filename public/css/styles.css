@@ -16,7 +16,7 @@ body{
   background-image: url("https://upload.wikimedia.org/wikipedia/commons/e/ef/StarfieldSimulation004.gif");
 }
 .fondo{
-  background-color: #f9f971 ;
+  background-color: #f9f971c4 ;
   border: solid 1px black;
   border-radius: 0.5rem;
   margin-top: 2rem;
@@ -29,8 +29,9 @@ h2{
   margin-top: 20px;
   text-shadow: -.0625rem -.0625rem 0 #6BFFFF, .0625rem .0625rem 0 #FF819E;
 }
-p{
+.div_mensaje p{
   font-family: 'Ubuntu', sans-serif;
+  font-size: 30px;
 }
 .div_mensaje{
   margin-top: 20px;
@@ -93,8 +94,9 @@ p{
 }
 .tabla{
   border: solid 1px black;
+  border-radius: 0.5rem;
   margin-bottom: 30px;
-  background-color: #844B5D;
+  background-color: #3C2B3C;
   
 }
 .tabla th, tr{ 
@@ -169,8 +171,11 @@ p{
   height: auto;
 }
 .form-group{
-  background-color: #7d4290;
+  background-color: #3C2B3C;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
+
 .form .mensaje p{
   font-size: 20px;
   margin: 25px 0px 25px 0px;
@@ -188,6 +193,7 @@ p{
   border: solid 1px black;
 }
 .form .form-check{
+  color: aliceblue;
   font-size: 15px;
   margin-left: 10px;
   font-family: 'Raleway', sans-serif;
@@ -197,22 +203,35 @@ p{
 }
 
 /* NEW_QUESTION.HTML */
-h3{
-  color: black;
+h3, .titulo_register{
+  color: rgb(229, 221, 221);
   font-family: 'Anton', sans-serif;
-  font-size: 60px;
+  font-size: 50px;
   margin-top: 20px;
-  text-shadow: -.0625rem -.0625rem 0 #6BFFFF, .0625rem .0625rem 0 #FF819E;
+  text-shadow: -.2rem -.2rem 0 #5ad5d5, .3rem .3rem 0 #FF819E !important;
 }
-.form_question{
+/* .form_question{
   background-color: #7d4290;
   border:solid 1px black;
-}
+  border-radius: 0.5rem;
+  margin-bottom: 3rem;
+} */
 .form_question .btn{
   background-color: #7d64bc;
 }
 
 /* LOGIN.HTML  */
-.form_login{
-
+.contenedor_login, .contenedor_register, .contenedor_pregunta{
+  background-color: #7d4290a7;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
 }
+.form_login, .form_register, .form_question{
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* REGISTER.HTML */
+
