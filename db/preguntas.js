@@ -1,6 +1,6 @@
 const pool = require('./pool.js')
 
-async function create_table() {
+create_table = async () => {
   const client = await pool.connect()
   await client.query(`
     create table if not exists preguntas (
@@ -17,18 +17,17 @@ async function create_table() {
 }
 create_table()
 
-
-const get_preguntas = async () => {
+const obtenerPreguntas = async () => {
   const client = await pool.connect()
   const res = await client.query({
     text: `select * from preguntas order by random() limit 3;`
   })
+
   client.release()
   return res.rows
 }
 
-
-async function create_pregunta(pregunta, respuesta_correcta, falsa1, falsa2, falsa3, falsa4) {
+const crearPregunta = async (pregunta, respuesta_correcta, falsa1, falsa2, falsa3, falsa4) => {
   const client = await pool.connect()
   const { rows } = await client.query({
     text: `insert into preguntas (pregunta, respuesta_correcta, respuesta_falsa1, respuesta_falsa2, respuesta_falsa3, respuesta_falsa4) values ($1, $2, $3,$4, $5, $6) returning *`,
@@ -38,4 +37,4 @@ async function create_pregunta(pregunta, respuesta_correcta, falsa1, falsa2, fal
   client.release()
   return rows[0]
 }
-module.exports = { get_preguntas, create_pregunta }
+module.exports = { obtenerPreguntas, crearPregunta }

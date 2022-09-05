@@ -74,9 +74,9 @@ router.post('/register', async (req, res) => {
   // 4. Finalmente lo agregamos a la base de datos
   const encrypted_pass = await bcrypt.hash(password, 10)
   const new_user = await create_user(name, email, encrypted_pass)
-  req.session.user = { id: new_user.id, name, email }
-  req.session.divPuntaje={text:'hidden'}
-
+ 
+  req.session.user = { id: new_user.id, name, email,isadmin:new_user.isadmin }
+ 
   // 5. y redirigimos a la ruta principal
   res.redirect('/')
 })

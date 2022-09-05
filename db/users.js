@@ -1,6 +1,6 @@
 const pool = require('./pool.js')
 
-async function create_table () {
+const create_table = async () => {
   // 1. Solicito un 'cliente' al pool de conexiones
   const client = await pool.connect()
 
@@ -21,52 +21,37 @@ async function create_table () {
 create_table()
 
 
-async function get_user (email) {
-  // 1. Solicito un 'cliente' al pool de conexiones
+const get_user = async (email) => {
   const client = await pool.connect()
-
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   const { rows } = await client.query(
     `select * from users where email=$1`,
     [email]
   )
-
-  // 3. Devuelvo el cliente al pool
   client.release()
-
-  // 4. retorno el primer usuario, en caso de que exista
   return rows[0]
 }
 
-async function create_user (name, email, password) {
-
-  // 1. Solicito un 'cliente' al pool de conexiones
+const create_user = async (name, email, password) => {
   const client = await pool.connect()
+  const usuario = await client.query('select * from users')
+  let result
 
-  // cuantos usuarios hay
-  const cant_users = await client.query('select * from users')
-  let resp
-  if (cant_users.rows == 0) {
-    resp = await client.query(
-      `insert into users (name, email, password, isadmin) values ($1, $2, $3, 'true') returning *`,
-      [name, email, password]
+  if (usuario.rows == 0) {
+    result = await client.query({
+      text: `insert into users (name, email, password, isadmin) values ($1, $2, $3, 'true') returning *`,
+      values: [name, email, password]
+    }
     )
   } else {
-    resp = await client.query(
-      `insert into users (name, email, password, isadmin) values ($1, $2, $3, 'false') returning *`,
-      [name, email, password]
+    result = await client.query({
+      text: `insert into users (name, email, password, isadmin) values ($1, $2, $3, 'false') returning *`,
+      values: [name, email, password]
+    }
     )
   }
-
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
-   
-
-  // 3. Devuelvo el cliente al pool
   client.release()
 
-  // return respuesta.rows
-  // return rows[0]
-  return resp.rows[0]
+  return result.rows[0]
 
 }
 
