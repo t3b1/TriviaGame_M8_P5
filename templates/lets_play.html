@@ -18,7 +18,7 @@
         <div class="form-group mb-4">
           {% set indice=loop.index %}
           {% for respuesta in pregunta.respuestas%}
-              {% if respuesta.text != '' %}
+              {% if respuesta.text != null %}
               <div class="form-check">
                 <input name="respuesta{{ indice }}"  class="form-check-input" type="radio" value="{{respuesta.value}}" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">

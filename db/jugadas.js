@@ -1,10 +1,6 @@
 const pool = require('./pool.js')
-
-async function create_table () {
-  // 1. Solicito un 'cliente' al pool de conexiones
+async function create_table() {
   const client = await pool.connect()
-
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
   await client.query(`
     create table if not exists jugadas (
       id serial primary key,
@@ -13,42 +9,40 @@ async function create_table () {
       user_id int not null references users(id)
     )
   `)
-
-  // 3. Devuelvo el cliente al pool
   client.release()
 }
-create_table() 
-
+create_table()
 
 async function get_jugadas() {
-  // 1. Solicito un 'cliente' al pool de conexiones
   const client = await pool.connect()
-
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
-  const { rows } = await client.query(
-    `select name, score, percentage from jugadas join users on users.id = user_id order by percentage desc;`,
+  const { rows } = await client.query({
+    text: `select name, score, percentage from jugadas join users on users.id = user_id order by percentage desc;`
+  }
   )
-  // 3. Devuelvo el cliente al pool
   client.release()
-
-  // 4. retorno el primer usuario, en caso de que exista
   return rows
 }
-
-async function create_jugada (score, percentage, user_id) {
-  // 1. Solicito un 'cliente' al pool de conexiones
+async function create_jugada(score, percentage, user_id) {
   const client = await pool.connect()
-
-  // 2. Ejecuto la consulta SQL (me traigo un array de arrays)
-  const { rows } = await client.query(
-    `insert into jugadas (score, percentage, user_id) values ($1, $2, $3) returning *`,
-    [score, percentage, user_id]
+  const { rows } = await client.query({
+    text: `insert into jugadas (score, percentage, user_id) values ($1, $2, $3) returning *`,
+    values: [score, percentage, user_id]
+  }
   )
-
-  // 3. Devuelvo el cliente al pool
   client.release()
 
   return rows[0]
 }
 
-module.exports = { get_jugadas, create_jugada } 
+const jugador = async (id) => {
+  const client = await pool.connect()
+  const { rows } = await client.query({
+    text: `select name,(users.id) as idJugador,score,percentage,jugadas.id from jugadas join users on users.id = user_id  where users.id = $1 order by jugadas.id desc limit 1;`,
+    values: [id]
+  }
+  )
+  client.release()
+  return rows[0]
+}
+
+module.exports = { get_jugadas, create_jugada, jugador } 

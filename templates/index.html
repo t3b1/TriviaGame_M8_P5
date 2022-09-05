@@ -5,16 +5,13 @@
 {{ navbar('/', user) }}
 <h2 class="text-center">Hola {{ user.name }}</h2>
 <div class="container">
-  {% if bandera == 1 %}
-  <div class="row mensaje" id="oculto">
-  {% else %}
-  <div class="row mensaje" id="oculto" hidden="true">
-  {% endif %}
-
-    <div class="col-8 bg-info mb-3">
-      <p> Eso estuvo genial {{user.name}}! tu puntaje es: {{algo.score}}/3 ({{  algo.percentage}} %)</p>
+    <div class="row mensaje" id="oculto" style="visibility: {{visibility}};">
+      <div class="col-8 bg-info mb-3">
+        <p> Eso estuvo genial {{jugada.name}}! tu puntaje es: {{jugada.score}}/3 ({{jugada.percentage}} %)</p>
+      </div>
     </div>
-  </div>
+
+
   <div class="row mt-5">
     <div class="col-6 offset-3 bg-primary">
       <div class="text-center">
@@ -46,6 +43,4 @@
     </div>
   </div>
 </div>  
-
-
 {% endblock %}

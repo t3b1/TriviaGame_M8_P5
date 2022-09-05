@@ -34,7 +34,8 @@ router.post('/login', async (req, res) => {
   req.session.user = {
     name: user_buscado.name,
     email: user_buscado.email,
-    id: user_buscado.id
+    id: user_buscado.id,
+    isadmin:user_buscado.isadmin
   }
   return res.redirect('/')  
 })
@@ -74,6 +75,7 @@ router.post('/register', async (req, res) => {
   const encrypted_pass = await bcrypt.hash(password, 10)
   const new_user = await create_user(name, email, encrypted_pass)
   req.session.user = { id: new_user.id, name, email }
+  req.session.divPuntaje={text:'hidden'}
 
   // 5. y redirigimos a la ruta principal
   res.redirect('/')
